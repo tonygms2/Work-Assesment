@@ -30,9 +30,23 @@ class FetchData:
                     "longitude":network_long,
                     "city":network_city,
                     "country":network_country,
+                    "station_count":self.getStationCount(network_id)
                 })
             return res
-
         except Exception as e:
             print(f"Error fetching data: {e}")
             return None
+        
+    
+    #function to get the station count from the url
+    def getStationCount(self, network_id):
+        try:
+            station_url = f"{self.url}/{network_id}"
+            response = requests.get(station_url)
+            data = response.json()
+            stations = data.get("network", {})
+            station_count = stations.get("stations", [])
+            return len(station_count)
+        except Exception as e:
+            print(f"Error fetching stations for {network_id}: {e}")
+            return 0
