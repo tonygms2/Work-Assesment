@@ -35,7 +35,7 @@ def main():
     #create an object to of the fetchData class from the DAL (Data access layer)
     fetchData = FetchData(BASE_URL)
     df = pd.DataFrame(fetchData.getNetworks())
-    print(df.head)
+    print(df.head())
     
 if __name__ == "__main__":
     main()

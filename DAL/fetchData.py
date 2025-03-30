@@ -1,6 +1,5 @@
 import requests
 import pandas as pd
-import json as js
 
 class FetchData:
     def __init__(self,url):
@@ -14,7 +13,7 @@ class FetchData:
             data = response.json()
             networks = data.get("networks", [])
 
-            for network in networks:
+            for network in networks[:10]:
                 network_id = network.get("id")
                 network_name = network.get("name") 
 
@@ -32,7 +31,7 @@ class FetchData:
                     "country":network_country,
                     "station_count":self.getStationCount(network_id)
                 })
-            return res
+            return pd.DataFrame(res)
         except Exception as e:
             print(f"Error fetching data: {e}")
             return None
