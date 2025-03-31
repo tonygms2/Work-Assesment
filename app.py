@@ -4,7 +4,7 @@
 import pandas as pd
 import json as js
 from DAL.FetchData import FetchData
-from PAL.Visualize import VisualizeNetwork
+from PL.Visualize import VisualizeNetwork
 import streamlit as st
 BASE_URL = "http://api.citybik.es/v2/networks"
 #endregion
@@ -19,8 +19,9 @@ def main():
     
     visualizeData = VisualizeNetwork(df)
     #use streamlit map to pin the latitude and longitude
-    visualizeData.showStationsOnMap()
-
+    visualizeData.showNetworksAsGraph()
+    visualizeData.showBarchart()
+    visualizeData.showNetworksOnMap()
 if __name__ == "__main__":
     main()
 

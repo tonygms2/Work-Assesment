@@ -29,7 +29,7 @@ class FetchData:
                     "longitude":network_long,
                     "city":network_city,
                     "country":network_country,
-                    "station_count":_self.getStationCount(network_id)
+                    #"station_count":_self.getStationCount(network_id)
                 })
             return pd.DataFrame(res)
         except Exception as e:
