@@ -1,19 +1,19 @@
 import requests
 import pandas as pd
-
+import streamlit as st 
 class FetchData:
     def __init__(self,url):
         self.url = url
          
-
-    def getNetworks(self):
+    @st.cache_data
+    def getNetworks(_self):
         res = []
         try:
-            response = requests.get(self.url)
+            response = requests.get(_self.url)
             data = response.json()
             networks = data.get("networks", [])
 
-            for network in networks[:10]:
+            for network in networks[:5]:
                 network_id = network.get("id")
                 network_name = network.get("name") 
 
@@ -29,18 +29,19 @@ class FetchData:
                     "longitude":network_long,
                     "city":network_city,
                     "country":network_country,
-                    "station_count":self.getStationCount(network_id)
+                    "station_count":_self.getStationCount(network_id)
                 })
             return pd.DataFrame(res)
         except Exception as e:
             print(f"Error fetching data: {e}")
-            return None
+            return pd.DataFrame([])  # return empty DataFrame on failure
+
         
     
     #function to get the station count from the url
-    def getStationCount(self, network_id):
+    def getStationCount(_self, network_id):
         try:
-            station_url = f"{self.url}/{network_id}"
+            station_url = f"{_self.url}/{network_id}"
             response = requests.get(station_url)
             data = response.json()
             stations = data.get("network", {})
